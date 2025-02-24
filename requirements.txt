@@ -6,4 +6,3 @@ python-multipart
 aiofiles
 jinja2
 websockets
-
