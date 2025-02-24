@@ -1,4 +1,4 @@
 .env
-/env
-notest.txt
+/myvenv
+notes.txt
 test.txt
