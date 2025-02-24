@@ -25,12 +25,13 @@ async def chat(websocket: WebSocket):  # 6
 
     while True:  # 8
         user_input = await websocket.receive_text()  # 9
+        #print("user input::"+user_input)
         chat_log.append({'role': 'user', 'content': user_input})  # 10
         chat_responses.append(user_input)  # 11
 
         try:  # 12
             response = openai.chat.completions.create(  # 13
-                model='gpt-4.0-mini',  # 14
+                model='gpt-4o-mini-2024-07-18',  # 14
                 messages=chat_log,  # 15
                 temperature=0.6,  # 16
                 stream=True  # 17
@@ -41,6 +42,7 @@ async def chat(websocket: WebSocket):  # 6
             for chunk in response:  # 20
                 if chunk.choices[0].delta.content is not None:  # 21
                     ai_response += chunk.choices[0].delta.content  # 22
+                   # print("ai_response::"+chunk.choices[0].delta.content)
                     await websocket.send_text(chunk.choices[0].delta.content)  # 23
             chat_responses.append(ai_response)  # 24
 
@@ -54,7 +56,7 @@ async def chat(request: Request, user_input: Annotated[str, Form()]):
     chat_responses.append(user_input)
 
     response = openai.chat.completions.create(
-        model='gpt-4.0-mini',
+        model='gpt-4o-mini-2024-07-18',
         messages=chat_log,
         temperature=0.6
     )
